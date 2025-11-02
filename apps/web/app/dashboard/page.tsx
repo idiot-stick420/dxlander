@@ -202,13 +202,21 @@ export default function Dashboard() {
         />
 
         <Section spacing="lg" container={false}>
-          <div className="max-w-7xl mx-auto px-6 space-y-6">
+          <div className="max-w-[100%] mx-auto px-6 space-y-6">
             {/* Actions Bar */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <Link href="/dashboard/import">
-                <Button size="lg" className="shadow-elegant">
-                  <Plus className="h-5 w-5 mr-2" />
-                  Import Project
+                <Button className="shadow-elegant max-w-50" aria-label="Import project">
+                  {/* Desktop / tablet: show icon + text */}
+                  <span className="hidden sm:inline-flex items-center">
+                    <Plus className="h-5 w-5 mr-2" />
+                    Import Project
+                  </span>
+
+                  {/* Mobile: show icon only */}
+                  <span className="inline-flex sm:hidden items-center justify-center">
+                    <Plus className="h-5 w-5" />
+                  </span>
                 </Button>
               </Link>
 
@@ -225,7 +233,7 @@ export default function Dashboard() {
 
             {/* Tabs with counts */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full max-w-3xl grid-cols-4">
+              <TabsList className="grid w-full max-w-[100%] grid-cols-4">
                 <TabsTrigger value="all" className="relative">
                   All Projects
                   {stats.all > 0 && (
@@ -298,7 +306,7 @@ export default function Dashboard() {
                   </div>
                 ) : filteredProjects.length === 0 ? (
                   <Card className="border-dashed border-2">
-                    <CardContent className="p-16 text-center">
+                    <CardContent className="p-4 text-center">
                       <IconWrapper variant="default" size="xl" className="mx-auto mb-4">
                         <FolderOpen className="h-12 w-12" />
                       </IconWrapper>
@@ -312,8 +320,14 @@ export default function Dashboard() {
                       </p>
                       <Link href="/dashboard/import">
                         <Button size="lg">
-                          <Plus className="h-5 w-5 mr-2" />
-                          Import First Project
+                          <span className="hidden sm:inline-flex items-center">
+                            <Plus className="h-5 w-5 mr-2" />
+                            Import First Project
+                          </span>
+
+                          <span className="inline-flex sm:hidden items-center justify-center max-w-0.5">
+                            <Plus className="h-5 w-5" />
+                          </span>
                         </Button>
                       </Link>
                     </CardContent>
@@ -326,7 +340,7 @@ export default function Dashboard() {
                       return (
                         <Link key={project.id} href={`/project/${project.id}`}>
                           <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 group cursor-pointer">
-                            <CardContent className="p-6">
+                            <CardContent className="p-6 sm:px-6">
                               <div className="flex items-start justify-between gap-6">
                                 {/* Project Info */}
                                 <div className="flex items-start space-x-4 flex-1 min-w-0">
@@ -452,13 +466,18 @@ export default function Dashboard() {
 
                                 {/* Actions */}
                                 <div
-                                  className="flex items-center gap-2 flex-shrink-0"
+                                  className="flex items-center justify-items-end gap-0 flex-shrink-0"
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   {project.status === 'imported' && (
-                                    <Button size="sm" variant="outline">
-                                      <Eye className="h-4 w-4 mr-1.5" />
-                                      View
+                                    <Button variant="outline" className="px-3 sm:px-4">
+                                      <span className="hidden sm:inline-flex items-center gap-2">
+                                        <Eye className="h-4 w-4" />
+                                        View
+                                      </span>
+                                      <span className="sm:hidden">
+                                        <Eye className="h-4 w-4" />
+                                      </span>
                                     </Button>
                                   )}
                                   {project.status === 'configured' && (
