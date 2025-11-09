@@ -183,18 +183,18 @@ export default function ProjectDetailPage({ params }: PageProps) {
               )}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center sm:gap-2">
               <Button variant="ghost" size="sm">
-                <FolderTree className="h-4 w-4 mr-2" />
-                Files
+                <FolderTree className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline-block">Files</span>
               </Button>
               <Button variant="ghost" size="sm">
                 <Download className="h-4 w-4 mr-2" />
-                Download
+                <span className="hidden sm:inline-block">Download</span>
               </Button>
               <Button variant="ghost" size="sm">
                 <Settings className="h-4 w-4 mr-2" />
-                Settings
+                <span className="hidden sm:inline-block">Settings</span>
               </Button>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
             <div className="lg:col-span-2 space-y-6">
               <Card>
                 <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
+                  <div className="sm:flex grid-cols-2 items-center justify-between">
                     <CardTitle className="text-base flex items-center gap-2">
                       <FileCode className="h-4 w-4 text-ocean-600" />
                       Build Configurations
@@ -241,9 +241,11 @@ export default function ProjectDetailPage({ params }: PageProps) {
                           other deployment files for your project.
                         </p>
                         <Link href={`/project/${resolvedParams.id}/configs/new`}>
-                          <Button className="bg-gradient-to-r from-ocean-600 to-ocean-500">
-                            <Plus className="h-4 w-4 mr-2" />
-                            Create Build Configuration
+                          <Button className="bg-gradient-to-r from-ocean-600 to-ocean-500 max-w-sm">
+                            <Plus className="h-4 w-4 m-0 sm:mr-2" />
+                            <span className="hidden sm:inline-block">
+                              Create Build Configuration
+                            </span>
                           </Button>
                         </Link>
                       </div>

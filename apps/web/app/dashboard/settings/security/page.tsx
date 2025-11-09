@@ -43,9 +43,9 @@ function SecurityContent() {
 
   const headerActions = (
     <Link href="/dashboard/settings">
-      <Button variant="ghost" size="sm">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Settings
+      <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+        <ArrowLeft className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Back</span>
       </Button>
     </Link>
   );
@@ -59,38 +59,38 @@ function SecurityContent() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-5xl mx-auto px-6 space-y-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6">
           {/* Master Encryption Key */}
           <Card>
             <CardHeader>
-              <CardTitle>Master Encryption Key</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Master Encryption Key</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
                 This key encrypts ALL credentials, API keys, and sensitive data stored in DXLander
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="p-4 bg-gradient-to-r from-ocean-50 to-blue-50 border border-ocean-200 rounded-lg">
-                <div className="flex items-start gap-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <div className="p-2 bg-ocean-100 rounded-lg">
                     <Shield className="h-5 w-5 text-ocean-600" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900 mb-2">AES-256-GCM Encryption</h4>
-                    <div className="grid md:grid-cols-2 gap-3 text-sm text-gray-700">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                         <span>All credentials encrypted at rest</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                         <span>Zero-knowledge architecture</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                         <span>Secure key rotation supported</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                         <span>Industry-standard encryption</span>
                       </div>
                     </div>
@@ -100,40 +100,45 @@ function SecurityContent() {
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="encryption-key">Current Encryption Key</Label>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                    <Label htmlFor="encryption-key" className="text-sm">
+                      Current Encryption Key
+                    </Label>
                     {hasCustomKey ? (
-                      <Badge variant="secondary" className="bg-green-100 text-green-700">
+                      <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs">
                         Custom Key Active
                       </Badge>
                     ) : (
-                      <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                      <Badge variant="secondary" className="bg-gray-200 text-gray-700 text-xs">
                         System Generated
                       </Badge>
                     )}
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                     <Input
                       id="encryption-key"
                       type={showEncryptionKey ? 'text' : 'password'}
                       value="pk_live_51MZxKLB2qVn8zQ9X7hYjKmN3pWrStUvXyZ4aBcDeFgHiJkLmNoPqRsTuVwXyZ"
                       readOnly
-                      className="font-mono text-sm"
+                      className="font-mono text-sm flex-1"
                     />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => setShowEncryptionKey(!showEncryptionKey)}
-                    >
-                      {showEncryptionKey ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </Button>
-                    <Button variant="outline" size="icon">
-                      <Copy className="h-4 w-4" />
-                    </Button>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setShowEncryptionKey(!showEncryptionKey)}
+                        className="h-10 w-10"
+                      >
+                        {showEncryptionKey ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                      <Button variant="outline" size="icon" className="h-10 w-10">
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                   <p className="text-xs text-gray-500">
                     Keep this key safe. You&apos;ll need it to decrypt your data if you migrate to
@@ -141,7 +146,7 @@ function SecurityContent() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-200 rounded-lg gap-3">
                   <div className="flex items-center gap-3">
                     <Lock className="h-5 w-5 text-gray-600" />
                     <div>
@@ -149,13 +154,18 @@ function SecurityContent() {
                       <p className="text-sm text-gray-600">During initial setup - 5 days ago</p>
                     </div>
                   </div>
-                  <Button variant="outline" onClick={() => setShowRotateKeyDialog(true)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowRotateKeyDialog(true)}
+                    size="sm"
+                    className="w-full sm:w-auto"
+                  >
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Rotate Key
                   </Button>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-200 rounded-lg gap-3">
                   <div className="flex items-center gap-3">
                     <Download className="h-5 w-5 text-gray-600" />
                     <div>
@@ -163,7 +173,7 @@ function SecurityContent() {
                       <p className="text-sm text-gray-600">Download encryption key for backup</p>
                     </div>
                   </div>
-                  <Button variant="outline">
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
                     <Download className="h-4 w-4 mr-2" />
                     Export
                   </Button>
@@ -175,13 +185,13 @@ function SecurityContent() {
           {/* What's Encrypted */}
           <Card>
             <CardHeader>
-              <CardTitle>Protected Data</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Protected Data</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
                 All sensitive data is encrypted using your master key
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {[
                   'Integration API Keys',
                   'Service Account JSONs',
@@ -208,8 +218,10 @@ function SecurityContent() {
           {/* Security Audit Log */}
           <Card>
             <CardHeader>
-              <CardTitle>Security Audit Log</CardTitle>
-              <CardDescription>Recent security events and key operations</CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Security Audit Log</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Recent security events and key operations
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -221,7 +233,7 @@ function SecurityContent() {
                 ].map((log, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg"
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-200 rounded-lg gap-2"
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2
@@ -240,10 +252,10 @@ function SecurityContent() {
 
       {/* Rotate Key Dialog */}
       <Dialog open={showRotateKeyDialog} onOpenChange={setShowRotateKeyDialog}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Rotate Encryption Key</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-lg sm:text-xl">Rotate Encryption Key</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm">
               Generate a new master encryption key and re-encrypt all stored credentials
             </DialogDescription>
           </DialogHeader>
@@ -251,10 +263,10 @@ function SecurityContent() {
           <div className="space-y-4 py-4">
             <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5" />
+                <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-gray-900 mb-1">Important Warning</h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
+                  <ul className="text-xs sm:text-sm text-gray-700 space-y-1">
                     <li>• All credentials will be re-encrypted with the new key</li>
                     <li>• The old key will no longer work</li>
                     <li>• This operation cannot be undone</li>
@@ -265,7 +277,7 @@ function SecurityContent() {
             </div>
 
             <div className="space-y-2">
-              <Label>New Encryption Key</Label>
+              <Label className="text-sm">New Encryption Key</Label>
               <Select defaultValue="generate">
                 <SelectTrigger>
                   <SelectValue />
@@ -278,11 +290,15 @@ function SecurityContent() {
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowRotateKeyDialog(false)}>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setShowRotateKeyDialog(false)}
+              className="w-full sm:w-auto"
+            >
               Cancel
             </Button>
-            <Button onClick={() => setShowRotateKeyDialog(false)}>
+            <Button onClick={() => setShowRotateKeyDialog(false)} className="w-full sm:w-auto">
               <RefreshCw className="h-4 w-4 mr-2" />
               Rotate Key
             </Button>

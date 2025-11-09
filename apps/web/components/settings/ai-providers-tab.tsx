@@ -421,28 +421,30 @@ export function AIProvidersTab() {
     <div className="space-y-6">
       {/* Info Banner */}
       <Card className="border-ocean-200 bg-gradient-to-r from-ocean-50/50 to-blue-50/50">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-ocean-100 rounded-lg">
-              <Zap className="h-6 w-6 text-ocean-600" />
+        <CardContent className="p-3 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+            <div className="p-2 sm:p-3 bg-ocean-100 rounded-lg">
+              <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-ocean-600" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-2">AI-Powered Analysis</h3>
-              <p className="text-sm text-gray-700 mb-3">
+              <h3 className="font-semibold text-gray-900 mb-2 text-base sm:text-lg">
+                AI-Powered Analysis
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-700 mb-3">
                 Configure AI providers to automatically analyze projects, detect frameworks, and
                 generate deployment configurations.
               </p>
-              <div className="flex items-center gap-4 text-sm text-gray-700">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-700">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
                   <span>Encrypted credentials (AES-256-GCM)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
                   <span>Multiple provider support</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
                   <span>Connection testing</span>
                 </div>
               </div>
@@ -453,39 +455,41 @@ export function AIProvidersTab() {
 
       {/* Add Provider Button */}
       <div className="flex justify-end">
-        <Button onClick={handleOpenAddDialog}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add AI Provider
+        <Button onClick={handleOpenAddDialog} size="sm" className="px-2 sm:px-4">
+          <Plus className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Add Provider</span>
         </Button>
       </div>
 
       {/* Providers Grid */}
       {isLoading ? (
         <Card>
-          <CardContent className="p-16 text-center">
-            <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-ocean-500" />
-            <p className="text-gray-600">Loading AI providers...</p>
+          <CardContent className="p-6 sm:p-16 text-center">
+            <Loader2 className="h-8 w-8 sm:h-12 sm:w-12 animate-spin mx-auto mb-4 text-ocean-500" />
+            <p className="text-gray-600 text-sm sm:text-base">Loading AI providers...</p>
           </CardContent>
         </Card>
       ) : providers.length === 0 ? (
         <Card className="border-dashed border-2">
-          <CardContent className="p-16 text-center">
+          <CardContent className="p-6 sm:p-16 text-center">
             <IconWrapper variant="default" size="xl" className="mx-auto mb-4">
-              <Zap className="h-12 w-12" />
+              <Zap className="h-8 w-8 sm:h-12 sm:w-12" />
             </IconWrapper>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No AI Providers Configured</h3>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+            <h3 className="text-base sm:text-xl font-semibold text-gray-900 mb-2">
+              No AI Providers Configured
+            </h3>
+            <p className="text-xs sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto">
               Add your first AI provider to enable automatic project analysis and configuration
               generation.
             </p>
-            <Button size="lg" onClick={handleOpenAddDialog}>
-              <Plus className="h-5 w-5 mr-2" />
-              Add First Provider
+            <Button size="lg" onClick={handleOpenAddDialog} className="px-3 sm:px-6">
+              <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+              <span className="text-sm sm:text-base">Add Provider</span>
             </Button>
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {providers.map((provider) => {
             const info = PROVIDER_INFO[provider.provider as ProviderType];
             const settings: ProviderSerializedSettings = provider.settings
@@ -499,52 +503,57 @@ export function AIProvidersTab() {
                   provider.isDefault ? 'border-ocean-300 ring-2 ring-ocean-100' : ''
                 }`}
               >
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="space-y-4">
                     {/* Header */}
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3 flex-1">
-                        <IconWrapper variant="default" size="md" className="flex-shrink-0">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <IconWrapper variant="default" size="md" className="flex-shrink-0 mt-0.5">
                           {getProviderIcon(provider.provider)}
                         </IconWrapper>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h4 className="font-semibold text-gray-900">{provider.name}</h4>
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <h4 className="font-semibold text-gray-900 truncate text-sm sm:text-base">
+                              {provider.name}
+                            </h4>
                             {provider.isDefault && (
                               <Badge
                                 variant="secondary"
-                                className="bg-ocean-100 text-ocean-700 flex-shrink-0"
+                                className="bg-ocean-100 text-ocean-700 flex-shrink-0 text-[0.6rem] sm:text-xs"
                               >
-                                <Star className="h-3 w-3 mr-1 fill-ocean-600" />
+                                <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1 fill-ocean-600" />
                                 Default
                               </Badge>
                             )}
                             {provider.lastTestStatus === 'success' ? (
                               <Badge
                                 variant="secondary"
-                                className="bg-green-100 text-green-700 flex-shrink-0"
+                                className="bg-green-100 text-green-700 flex-shrink-0 text-[0.6rem] sm:text-xs"
                               >
-                                <CheckCircle2 className="h-3 w-3 mr-1" />
+                                <CheckCircle2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
                                 Connected
                               </Badge>
                             ) : provider.lastTestStatus === 'failed' ? (
-                              <Badge variant="destructive" className="flex-shrink-0">
-                                <AlertCircle className="h-3 w-3 mr-1" />
+                              <Badge
+                                variant="destructive"
+                                className="flex-shrink-0 text-[0.6rem] sm:text-xs"
+                              >
+                                <AlertCircle className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
                                 Error
                               </Badge>
                             ) : null}
                           </div>
-                          <p className="text-sm text-gray-600">{info.description}</p>
+                          <p className="text-xs sm:text-sm text-gray-600">{info.description}</p>
                         </div>
                       </div>
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="flex-shrink-0">
+                          <Button variant="ghost" size="sm" className="flex-shrink-0 h-8 w-8 p-0">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuContent align="end" className="w-40 sm:w-48">
                           {!provider.isDefault && (
                             <>
                               <DropdownMenuItem onClick={() => handleSetDefault(provider.id)}>
@@ -577,31 +586,34 @@ export function AIProvidersTab() {
                     {/* Error Message */}
                     {provider.lastError && (
                       <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-sm text-red-600">{provider.lastError}</p>
+                        <p className="text-xs sm:text-sm text-red-600">{provider.lastError}</p>
                       </div>
                     )}
 
                     {/* Provider Details */}
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-xs sm:text-sm">
                       <div className="flex items-center justify-between">
                         <span className="text-gray-600">Model</span>
-                        <Badge variant="secondary" className={info.color}>
+                        <Badge
+                          variant="secondary"
+                          className={`${info.color} text-[0.6rem] sm:text-xs`}
+                        >
                           {settings.model || 'Not set'}
                         </Badge>
                       </div>
                       {settings.baseUrl && (
                         <div className="flex items-center justify-between">
                           <span className="text-gray-600">Base URL</span>
-                          <span className="text-gray-900 font-mono text-xs">
+                          <span className="text-gray-900 font-mono text-[0.6rem] sm:text-xs truncate max-w-[100px] sm:max-w-[120px]">
                             {settings.baseUrl}
                           </span>
                         </div>
                       )}
                       <div className="flex items-center justify-between">
                         <span className="text-gray-600">API Key</span>
-                        <div className="flex items-center gap-2">
-                          <Lock className="h-3.5 w-3.5 text-gray-500" />
-                          <span className="text-gray-900 font-mono text-xs">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <Lock className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-gray-500 flex-shrink-0" />
+                          <span className="text-gray-900 font-mono text-[0.6rem] sm:text-xs">
                             {info.requiresApiKey ? '••••••••' : 'Not required'}
                           </span>
                         </div>
@@ -609,22 +621,22 @@ export function AIProvidersTab() {
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-3 border-t border-gray-100">
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Used</p>
-                        <p className="text-sm font-semibold text-gray-900">
+                        <p className="text-[0.6rem] sm:text-xs text-gray-500 mb-1">Used</p>
+                        <p className="text-xs sm:text-sm font-semibold text-gray-900">
                           {provider.usageCount || 0}x
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Status</p>
-                        <p className="text-sm font-semibold text-gray-900">
+                        <p className="text-[0.6rem] sm:text-xs text-gray-500 mb-1">Status</p>
+                        <p className="text-xs sm:text-sm font-semibold text-gray-900">
                           {provider.isActive ? 'Active' : 'Inactive'}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Last Tested</p>
-                        <p className="text-sm font-semibold text-gray-900">
+                        <p className="text-[0.6rem] sm:text-xs text-gray-500 mb-1">Last Tested</p>
+                        <p className="text-[0.6rem] sm:text-sm font-semibold text-gray-900">
                           {provider.lastTested ? 'Just now' : 'Never'}
                         </p>
                       </div>
@@ -639,18 +651,20 @@ export function AIProvidersTab() {
 
       {/* Add Provider Dialog */}
       <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl">Add AI Provider</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-lg sm:text-xl">Add AI Provider</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm">
               Configure a new AI provider for project analysis and configuration generation.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-6 py-4">
+          <div className="space-y-5 sm:space-y-6 py-4">
             {/* Provider Selection */}
             <div className="space-y-2">
-              <Label htmlFor="provider-type">Provider</Label>
+              <Label htmlFor="provider-type" className="text-sm">
+                Provider
+              </Label>
               <Select value={formData.provider} onValueChange={handleProviderChange}>
                 <SelectTrigger id="provider-type">
                   <SelectValue />
@@ -658,11 +672,16 @@ export function AIProvidersTab() {
                 <SelectContent>
                   {Object.entries(PROVIDER_INFO).map(([key, info]) => (
                     <SelectItem key={key} value={key}>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="secondary" className={info.color}>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge
+                          variant="secondary"
+                          className={`${info.color} text-[0.6rem] sm:text-xs`}
+                        >
                           {info.name}
                         </Badge>
-                        <span className="text-xs text-gray-500">{info.description}</span>
+                        <span className="text-[0.6rem] sm:text-xs text-gray-500">
+                          {info.description}
+                        </span>
                       </div>
                     </SelectItem>
                   ))}
@@ -678,7 +697,7 @@ export function AIProvidersTab() {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 leftIcon={<Zap className="h-4 w-4" />}
               />
-              <p className="text-xs text-gray-500">
+              <p className="text-[0.6rem] sm:text-xs text-gray-500">
                 A friendly name to identify this provider (e.g., &quot;Production OpenAI&quot;,
                 &quot;Dev Claude&quot;)
               </p>
@@ -703,7 +722,7 @@ export function AIProvidersTab() {
                     </button>
                   }
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-[0.6rem] sm:text-xs text-gray-500">
                   Your API key will be encrypted with AES-256-GCM
                 </p>
               </div>
@@ -718,7 +737,7 @@ export function AIProvidersTab() {
                   onChange={(e) => setFormData({ ...formData, baseUrl: e.target.value })}
                   leftIcon={<Server className="h-4 w-4" />}
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-[0.6rem] sm:text-xs text-gray-500">
                   Server URL (e.g., http://localhost:11434 for Ollama)
                 </p>
               </div>
@@ -726,7 +745,9 @@ export function AIProvidersTab() {
 
             {/* Model Selection */}
             <div className="space-y-2">
-              <Label htmlFor="model">Model</Label>
+              <Label htmlFor="model" className="text-sm">
+                Model
+              </Label>
               <Select
                 value={formData.model}
                 onValueChange={(value) => setFormData({ ...formData, model: value })}
@@ -739,11 +760,11 @@ export function AIProvidersTab() {
                   {formData.provider === 'openrouter' && detailedModels.length > 0
                     ? detailedModels.map((model) => (
                         <SelectItem key={model.id} value={model.id}>
-                          <div className="flex items-center justify-between w-full">
-                            <span>{model.name}</span>
+                          <div className="flex flex-wrap items-center justify-between w-full gap-2">
+                            <span className="truncate text-xs sm:text-sm">{model.name}</span>
                             <Badge
                               variant="secondary"
-                              className={`ml-2 ${model.isFree ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                              className={`ml-2 text-[0.6rem] sm:text-xs ${model.isFree ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
                             >
                               {model.isFree ? 'Free' : 'Paid'}
                             </Badge>
@@ -752,7 +773,7 @@ export function AIProvidersTab() {
                       ))
                     : PROVIDER_INFO[formData.provider].models.map((model) => (
                         <SelectItem key={model} value={model}>
-                          {model}
+                          <span className="text-xs sm:text-sm">{model}</span>
                         </SelectItem>
                       ))}
                 </SelectContent>
@@ -767,26 +788,27 @@ export function AIProvidersTab() {
                 onClick={handleTestConnection}
                 disabled={testConnectionMutation.isPending}
                 className="w-full"
+                size="sm"
               >
                 {testConnectionMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Testing Connection...
+                    <span className="text-xs sm:text-sm">Testing Connection...</span>
                   </>
                 ) : testStatus === 'success' ? (
                   <>
                     <CheckCircle2 className="h-4 w-4 mr-2 text-green-600" />
-                    Test Connection
+                    <span className="text-xs sm:text-sm">Test Connection</span>
                   </>
                 ) : testStatus === 'error' ? (
                   <>
                     <AlertCircle className="h-4 w-4 mr-2 text-red-600" />
-                    Test Connection
+                    <span className="text-xs sm:text-sm">Test Connection</span>
                   </>
                 ) : (
                   <>
                     <TestTube className="h-4 w-4 mr-2" />
-                    Test Connection
+                    <span className="text-xs sm:text-sm">Test Connection</span>
                   </>
                 )}
               </Button>
@@ -804,14 +826,14 @@ export function AIProvidersTab() {
                 >
                   <div className="flex items-start gap-2">
                     {testStatus === 'success' ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
                     ) : testStatus === 'error' ? (
-                      <AlertCircle className="h-4 w-4 text-red-600 mt-0.5" />
+                      <AlertCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
                     ) : (
-                      <Loader2 className="h-4 w-4 text-blue-600 mt-0.5 animate-spin" />
+                      <Loader2 className="h-4 w-4 text-blue-600 mt-0.5 animate-spin flex-shrink-0" />
                     )}
                     <p
-                      className={`text-sm ${
+                      className={`text-xs sm:text-sm ${
                         testStatus === 'success'
                           ? 'text-green-700'
                           : testStatus === 'error'
@@ -827,12 +849,14 @@ export function AIProvidersTab() {
             </div>
 
             {/* Security Info */}
-            <div className="p-4 bg-ocean-50 border border-ocean-200 rounded-lg">
+            <div className="p-3 sm:p-4 bg-ocean-50 border border-ocean-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <Lock className="h-5 w-5 text-ocean-600 mt-0.5" />
+                <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-ocean-600 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-1">Secure Storage</h4>
-                  <p className="text-sm text-gray-700">
+                  <h4 className="font-medium text-gray-900 mb-1 text-sm sm:text-base">
+                    Secure Storage
+                  </h4>
+                  <p className="text-[0.6rem] sm:text-sm text-gray-700">
                     All API keys are encrypted with your master encryption key (AES-256-GCM) before
                     storage. No credentials are ever stored in plaintext.
                   </p>
@@ -841,24 +865,29 @@ export function AIProvidersTab() {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
             <Button
               variant="outline"
               onClick={() => setShowAddDialog(false)}
               disabled={createMutation.isPending}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button onClick={handleCreate} disabled={createMutation.isPending}>
+            <Button
+              onClick={handleCreate}
+              disabled={createMutation.isPending}
+              className="w-full sm:w-auto"
+            >
               {createMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Creating...
+                  <span className="text-xs sm:text-sm">Creating...</span>
                 </>
               ) : (
                 <>
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Provider
+                  <span className="text-xs sm:text-sm">Add Provider</span>
                 </>
               )}
             </Button>
@@ -868,13 +897,15 @@ export function AIProvidersTab() {
 
       {/* Edit Provider Dialog */}
       <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl">Edit AI Provider</DialogTitle>
-            <DialogDescription>Update your AI provider configuration.</DialogDescription>
+            <DialogTitle className="text-lg sm:text-xl">Edit AI Provider</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm">
+              Update your AI provider configuration.
+            </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-6 py-4">
+          <div className="space-y-5 sm:space-y-6 py-4">
             {/* Provider Name */}
             <div className="space-y-2">
               <FloatingInput
@@ -904,7 +935,9 @@ export function AIProvidersTab() {
                     </button>
                   }
                 />
-                <p className="text-xs text-gray-500">Leave empty to keep the existing API key</p>
+                <p className="text-[0.6rem] sm:text-xs text-gray-500">
+                  Leave empty to keep the existing API key
+                </p>
               </div>
             )}
 
@@ -922,7 +955,9 @@ export function AIProvidersTab() {
 
             {/* Model Selection */}
             <div className="space-y-2">
-              <Label htmlFor="edit-model">Model</Label>
+              <Label htmlFor="edit-model" className="text-sm">
+                Model
+              </Label>
               <Select
                 value={formData.model}
                 onValueChange={(value) => setFormData({ ...formData, model: value })}
@@ -935,11 +970,11 @@ export function AIProvidersTab() {
                   {formData.provider === 'openrouter' && detailedModels.length > 0
                     ? detailedModels.map((model) => (
                         <SelectItem key={model.id} value={model.id}>
-                          <div className="flex items-center justify-between w-full">
-                            <span>{model.name}</span>
+                          <div className="flex flex-wrap items-center justify-between w-full gap-2">
+                            <span className="truncate text-xs sm:text-sm">{model.name}</span>
                             <Badge
                               variant="secondary"
-                              className={`ml-2 ${model.isFree ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                              className={`ml-2 text-[0.6rem] sm:text-xs ${model.isFree ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
                             >
                               {model.isFree ? 'Free' : 'Paid'}
                             </Badge>
@@ -948,7 +983,7 @@ export function AIProvidersTab() {
                       ))
                     : PROVIDER_INFO[formData.provider].models.map((model) => (
                         <SelectItem key={model} value={model}>
-                          {model}
+                          <span className="text-xs sm:text-sm">{model}</span>
                         </SelectItem>
                       ))}
                 </SelectContent>
@@ -956,24 +991,29 @@ export function AIProvidersTab() {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
             <Button
               variant="outline"
               onClick={() => setShowEditDialog(false)}
               disabled={updateMutation.isPending}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button onClick={handleUpdate} disabled={updateMutation.isPending}>
+            <Button
+              onClick={handleUpdate}
+              disabled={updateMutation.isPending}
+              className="w-full sm:w-auto"
+            >
               {updateMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Saving...
+                  <span className="text-xs sm:text-sm">Saving...</span>
                 </>
               ) : (
                 <>
                   <Edit className="h-4 w-4 mr-2" />
-                  Save Changes
+                  <span className="text-xs sm:text-sm">Save Changes</span>
                 </>
               )}
             </Button>
@@ -983,19 +1023,23 @@ export function AIProvidersTab() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete AI Provider</DialogTitle>
-            <DialogDescription>Are you sure you want to delete this AI provider?</DialogDescription>
+            <DialogTitle className="text-lg sm:text-xl">Delete AI Provider</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm">
+              Are you sure you want to delete this AI provider?
+            </DialogDescription>
           </DialogHeader>
 
           <div className="py-4">
-            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-1">This action cannot be undone</h4>
-                  <p className="text-sm text-gray-700">
+                  <h4 className="font-medium text-gray-900 mb-1 text-sm sm:text-base">
+                    This action cannot be undone
+                  </h4>
+                  <p className="text-[0.6rem] sm:text-sm text-gray-700">
                     Deleting <strong>{selectedProvider?.name}</strong> will remove all associated
                     configuration and credentials. Projects using this provider may fail analysis.
                   </p>
@@ -1004,30 +1048,21 @@ export function AIProvidersTab() {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
             <Button
               variant="outline"
               onClick={() => setShowDeleteDialog(false)}
-              disabled={deleteMutation.isPending}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
             <Button
               variant="destructive"
               onClick={handleDeleteConfirm}
-              disabled={deleteMutation.isPending}
+              className="w-full sm:w-auto"
             >
-              {deleteMutation.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Deleting...
-                </>
-              ) : (
-                <>
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Provider
-                </>
-              )}
+              <Trash2 className="h-4 w-4 mr-2" />
+              <span className="text-xs sm:text-sm">Delete Provider</span>
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -257,9 +257,9 @@ export default function ImportPage() {
 
   const headerActions = (
     <Link href="/dashboard">
-      <Button variant="ghost" size="sm">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Dashboard
+      <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+        <ArrowLeft className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Back</span>
       </Button>
     </Link>
   );
@@ -273,8 +273,8 @@ export default function ImportPage() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-[380px_1fr] gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-4 sm:gap-6">
             {/* Left Sidebar */}
             <div className="space-y-4">
               <div className="space-y-3">
@@ -320,7 +320,7 @@ export default function ImportPage() {
                           {method.icon}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
                             <h3
                               className={`font-semibold ${isDisabled ? 'text-gray-500' : 'text-gray-900'}`}
                             >
@@ -332,7 +332,7 @@ export default function ImportPage() {
                                 className="bg-amber-100 text-amber-700 border-amber-200 text-xs"
                               >
                                 <Star className="h-3 w-3 mr-1 fill-amber-600" />
-                                Popular
+                                <span className="hidden sm:inline">Popular</span>
                               </Badge>
                             )}
                           </div>
@@ -380,19 +380,19 @@ export default function ImportPage() {
                     {importMethods.find((m) => m.id === selectedMethod)?.icon}
                   </IconWrapper>
                   <div className="flex-1">
-                    <CardTitle>
+                    <CardTitle className="text-base sm:text-lg">
                       Import from {importMethods.find((m) => m.id === selectedMethod)?.name}
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-xs sm:text-sm">
                       Connect your repository to generate build configurations
                     </CardDescription>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-8 space-y-6">
+              <CardContent className="p-4 sm:p-8 space-y-6">
                 {error && (
-                  <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+                  <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-red-900">Import Failed</p>
                       <p className="text-sm text-red-700">{error}</p>
@@ -404,43 +404,53 @@ export default function ImportPage() {
                 {selectedMethod === 'github' && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label>Repository URL or Owner/Repo</Label>
+                      <Label htmlFor="github-url">Repository URL or Owner/Repo</Label>
                       <Input
+                        id="github-url"
                         placeholder="username/repo or https://github.com/username/repo"
                         value={githubUrl}
                         onChange={(e) => setGithubUrl(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Branch (optional)</Label>
+                      <Label htmlFor="github-branch">Branch (optional)</Label>
                       <Input
+                        id="github-branch"
                         placeholder="main"
                         value={githubBranch}
                         onChange={(e) => setGithubBranch(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Personal Access Token (for private repos)</Label>
+                      <Label htmlFor="github-token">
+                        Personal Access Token (for private repos)
+                      </Label>
                       <Input
+                        id="github-token"
                         type="password"
                         placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
                         value={githubToken}
                         onChange={(e) => setGithubToken(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Project Name (optional)</Label>
+                      <Label htmlFor="github-project-name">Project Name (optional)</Label>
                       <Input
+                        id="github-project-name"
                         placeholder="my-project"
                         value={projectName}
                         onChange={(e) => setProjectName(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
                   </div>
@@ -450,50 +460,58 @@ export default function ImportPage() {
                 {selectedMethod === 'gitlab' && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label>GitLab Instance URL (optional)</Label>
+                      <Label htmlFor="gitlab-url">GitLab Instance URL (optional)</Label>
                       <Input
+                        id="gitlab-url"
                         placeholder="https://gitlab.com (default)"
                         value={gitlabUrl}
                         onChange={(e) => setGitlabUrl(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         Leave empty for GitLab.com, or enter your self-hosted URL
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Personal Access Token *</Label>
+                      <Label htmlFor="gitlab-token">Personal Access Token *</Label>
                       <Input
+                        id="gitlab-token"
                         type="password"
                         placeholder="glpat-xxxxxxxxxxxxxxxxxxxx"
                         value={gitlabToken}
                         onChange={(e) => setGitlabToken(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         Create token at GitLab → Settings → Access Tokens (api + read_repository
                         scopes)
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Project ID or Namespace/Project *</Label>
+                      <Label htmlFor="gitlab-project">Project ID or Namespace/Project *</Label>
                       <Input
+                        id="gitlab-project"
                         placeholder="12345 or username/project-name"
                         value={gitlabProject}
                         onChange={(e) => setGitlabProject(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Branch (optional)</Label>
+                      <Label htmlFor="gitlab-branch">Branch (optional)</Label>
                       <Input
+                        id="gitlab-branch"
                         placeholder="main"
                         value={gitlabBranch}
                         onChange={(e) => setGitlabBranch(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
                   </div>
@@ -503,66 +521,78 @@ export default function ImportPage() {
                 {selectedMethod === 'bitbucket' && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label>Username *</Label>
+                      <Label htmlFor="bitbucket-username">Username *</Label>
                       <Input
+                        id="bitbucket-username"
                         placeholder="your-username"
                         value={bitbucketUsername}
                         onChange={(e) => setBitbucketUsername(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>App Password *</Label>
+                      <Label htmlFor="bitbucket-password">App Password *</Label>
                       <Input
+                        id="bitbucket-password"
                         type="password"
                         placeholder="App password"
                         value={bitbucketPassword}
                         onChange={(e) => setBitbucketPassword(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         Create at Bitbucket → Settings → App passwords (Repositories: Read)
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Workspace *</Label>
+                      <Label htmlFor="bitbucket-workspace">Workspace *</Label>
                       <Input
+                        id="bitbucket-workspace"
                         placeholder="your-workspace"
                         value={bitbucketWorkspace}
                         onChange={(e) => setBitbucketWorkspace(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Repository Slug *</Label>
+                      <Label htmlFor="bitbucket-repo">Repository Slug *</Label>
                       <Input
+                        id="bitbucket-repo"
                         placeholder="repository-name"
                         value={bitbucketRepo}
                         onChange={(e) => setBitbucketRepo(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Project Name (optional)</Label>
+                      <Label htmlFor="bitbucket-project-name">Project Name (optional)</Label>
                       <Input
+                        id="bitbucket-project-name"
                         placeholder="project-name"
                         value={bitbucketProjectName}
                         onChange={(e) => setBitbucketProjectName(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Branch (optional)</Label>
+                      <Label htmlFor="bitbucket-branch">Branch (optional)</Label>
                       <Input
+                        id="bitbucket-branch"
                         placeholder="main"
                         value={bitbucketBranch}
                         onChange={(e) => setBitbucketBranch(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
                   </div>
@@ -572,12 +602,14 @@ export default function ImportPage() {
                 {selectedMethod === 'zip' && (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label>Project Name (optional)</Label>
+                      <Label htmlFor="zip-project-name">Project Name (optional)</Label>
                       <Input
+                        id="zip-project-name"
                         placeholder="my-project"
                         value={projectName}
                         onChange={(e) => setProjectName(e.target.value)}
                         disabled={isImporting}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
@@ -586,7 +618,7 @@ export default function ImportPage() {
                       onDragLeave={handleDragLeave}
                       onDrop={handleDrop}
                       onClick={() => document.getElementById('file-input')?.click()}
-                      className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer group ${
+                      className={`border-2 border-dashed rounded-xl p-6 sm:p-12 text-center transition-all cursor-pointer group ${
                         isDragging
                           ? 'border-ocean-500 bg-ocean-100'
                           : selectedFile
@@ -601,23 +633,24 @@ export default function ImportPage() {
                         onChange={handleFileSelect}
                         className="hidden"
                         disabled={isImporting}
+                        aria-label="Select ZIP file for upload"
                       />
                       <div className="flex flex-col items-center gap-4">
                         <div
-                          className={`p-4 rounded-full transition-colors ${
+                          className={`p-3 sm:p-4 rounded-full transition-colors ${
                             selectedFile ? 'bg-green-100' : 'bg-ocean-100 group-hover:bg-ocean-200'
                           }`}
                         >
                           {selectedFile ? (
-                            <CheckCircle2 className="h-10 w-10 text-green-600" />
+                            <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-600" />
                           ) : (
-                            <Upload className="h-10 w-10 text-ocean-600" />
+                            <Upload className="h-8 w-8 sm:h-10 sm:w-10 text-ocean-600" />
                           )}
                         </div>
                         <div>
                           {selectedFile ? (
                             <>
-                              <p className="text-lg font-semibold text-gray-900 mb-1">
+                              <p className="text-base sm:text-lg font-semibold text-gray-900 mb-1 truncate max-w-xs">
                                 {selectedFile.name}
                               </p>
                               <p className="text-sm text-gray-600">
@@ -627,7 +660,7 @@ export default function ImportPage() {
                             </>
                           ) : (
                             <>
-                              <p className="text-lg font-semibold text-gray-900 mb-1">
+                              <p className="text-base sm:text-lg font-semibold text-gray-900 mb-1">
                                 <span className="text-ocean-600">Click to upload</span> or drag and
                                 drop
                               </p>
@@ -641,30 +674,32 @@ export default function ImportPage() {
                 )}
 
                 {/* Import Actions */}
-                <div className="flex items-center justify-between pt-6 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Shield className="h-4 w-4 text-green-600" />
+                <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t gap-4">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                    <Shield className="h-4 w-4 text-green-600 flex-shrink-0" />
                     <span>All imports are encrypted and secure</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Link href="/dashboard">
-                      <Button variant="outline">Cancel</Button>
+                  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                    <Link href="/dashboard" className="w-1/2 sm:w-auto">
+                      <Button variant="outline" className="w-full">
+                        Cancel
+                      </Button>
                     </Link>
                     <Button
                       size="lg"
                       onClick={handleImport}
                       disabled={isImporting}
-                      className="bg-gradient-to-r from-ocean-600 to-ocean-500 hover:from-ocean-700 hover:to-ocean-600"
+                      className="bg-gradient-to-r from-ocean-600 to-ocean-500 hover:from-ocean-700 hover:to-ocean-600 w-1/2 sm:w-auto"
                     >
                       {isImporting ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2" />
-                          Importing...
+                          <span className="text-sm">Importing...</span>
                         </>
                       ) : (
                         <>
                           <Rocket className="h-4 w-4 mr-2" />
-                          Import Project
+                          <span className="hidden sm:inline">Import Project</span>
                           <ArrowRight className="h-4 w-4 ml-2" />
                         </>
                       )}

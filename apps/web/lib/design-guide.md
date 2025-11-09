@@ -126,14 +126,18 @@ export default function MyPage() {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-  <TabsList className="grid w-full grid-cols-3">
-    <TabsTrigger value="option1">
+  <TabsList className="flex w-max min-w-full sm:min-w-0 space-x-1 h-full">
+    <TabsTrigger value="option1" className="whitespace-nowrap">
       <Database className="h-4 w-4" />
-      <span>Option 1</span>
+      <span className="truncate">Option 1</span>
       <Badge variant="secondary">New</Badge> {/* Optional badge */}
     </TabsTrigger>
-    <TabsTrigger value="option2">Option 2</TabsTrigger>
-    <TabsTrigger value="option3">Option 3</TabsTrigger>
+    <TabsTrigger value="option2" className="whitespace-nowrap">
+      <span className="truncate">Option 2</span>
+    </TabsTrigger>
+    <TabsTrigger value="option3" className="whitespace-nowrap">
+      <span className="truncate">Option 3</span>
+    </TabsTrigger>
   </TabsList>
 
   <TabsContent value="option1">{/* Content for option 1 */}</TabsContent>

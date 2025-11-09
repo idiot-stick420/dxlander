@@ -204,11 +204,11 @@ export default function NewConfigurationPage({ params }: PageProps) {
   };
 
   const headerActions = (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 sm:gap-3">
       <Link href={`/project/${resolvedParams.id}/configs`}>
-        <Button variant="ghost" size="sm">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Configurations
+        <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+          <ArrowLeft className="h-4 w-4 mr-0 sm:mr-2" />
+          <span className="hidden sm:inline">Back to Configurations</span>
         </Button>
       </Link>
     </div>
@@ -220,30 +220,37 @@ export default function NewConfigurationPage({ params }: PageProps) {
         title="Generate Build Configuration"
         subtitle="Choose a configuration type for your project"
         actions={headerActions}
+        className="py-2 sm:py-4"
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-5xl mx-auto px-6 space-y-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6 sm:space-y-8">
           {/* AI Provider Status Banner */}
           {!isLoadingProviderStatus && (
             <>
               {aiProviderStatus?.hasProvider ? (
                 <Card className="border-ocean-200 bg-gradient-to-r from-ocean-50/30 to-blue-50/30">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       <div className="p-2 bg-ocean-100 rounded-lg">
                         <Zap className="h-5 w-5 text-ocean-600" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
                           <p className="text-sm font-medium text-gray-900">
                             AI Provider: {aiProviderStatus.provider?.name}
                           </p>
-                          <Badge variant="secondary" className="bg-ocean-100 text-ocean-700">
+                          <Badge
+                            variant="secondary"
+                            className="bg-ocean-100 text-ocean-700 text-xs"
+                          >
                             {aiProviderStatus.provider?.model}
                           </Badge>
                           {aiProviderStatus.provider?.lastTestStatus === 'success' && (
-                            <Badge variant="secondary" className="bg-green-100 text-green-700">
+                            <Badge
+                              variant="secondary"
+                              className="bg-green-100 text-green-700 text-xs"
+                            >
                               <CheckCircle2 className="h-3 w-3 mr-1" />
                               Connected
                             </Badge>
@@ -253,10 +260,10 @@ export default function NewConfigurationPage({ params }: PageProps) {
                           This provider will be used for project analysis
                         </p>
                       </div>
-                      <Link href="/dashboard/settings/ai-providers">
-                        <Button variant="ghost" size="sm">
-                          <Settings className="h-4 w-4 mr-2" />
-                          Change
+                      <Link href="/dashboard/settings/ai-providers" className="w-full sm:w-auto">
+                        <Button variant="ghost" size="sm" className="w-full sm:w-auto px-2 sm:px-4">
+                          <Settings className="h-4 w-4 mr-0 sm:mr-2" />
+                          <span className="hidden sm:inline">Change</span>
                         </Button>
                       </Link>
                     </div>
@@ -264,13 +271,13 @@ export default function NewConfigurationPage({ params }: PageProps) {
                 </Card>
               ) : (
                 <Card className="border-red-200 bg-red-50/30">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex flex-col sm:flex-row items-start gap-4">
                       <div className="p-3 bg-red-100 rounded-lg flex-shrink-0">
                         <XCircle className="h-6 w-6 text-red-600" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2">
+                        <h3 className="font-semibold text-gray-900 mb-2 text-base sm:text-lg">
                           No AI Provider Configured
                         </h3>
                         <p className="text-sm text-gray-700 mb-4">
@@ -281,7 +288,7 @@ export default function NewConfigurationPage({ params }: PageProps) {
                         <Link href="/dashboard/settings/ai-providers">
                           <Button
                             size="sm"
-                            className="bg-gradient-to-r from-ocean-600 to-ocean-500"
+                            className="bg-gradient-to-r from-ocean-600 to-ocean-500 w-full sm:w-auto"
                           >
                             <Settings className="h-4 w-4 mr-2" />
                             Configure AI Provider
@@ -313,7 +320,7 @@ export default function NewConfigurationPage({ params }: PageProps) {
                 />
               ) : (
                 <Card variant="elevated">
-                  <CardContent className="p-8 text-center">
+                  <CardContent className="p-6 sm:p-8 text-center">
                     <Loader2 className="h-8 w-8 animate-spin text-ocean-600 mx-auto mb-4" />
                     <p className="text-gray-600">Initializing AI analysis...</p>
                   </CardContent>
@@ -325,14 +332,14 @@ export default function NewConfigurationPage({ params }: PageProps) {
           {/* Show generation progress */}
           {stage === 'generating' && (
             <Card variant="elevated">
-              <CardHeader>
-                <CardTitle className="text-xl">Generating Configuration Files</CardTitle>
+              <CardHeader className="pb-3 sm:pb-6">
+                <CardTitle className="text-lg sm:text-xl">Generating Configuration Files</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center gap-3 p-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4">
                   <Loader2 className="h-6 w-6 text-ocean-600 animate-spin" />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 text-sm sm:text-base">
                       Creating {selectedType} configuration files...
                     </p>
                     <p className="text-sm text-gray-600 mt-1">
@@ -349,10 +356,10 @@ export default function NewConfigurationPage({ params }: PageProps) {
           {stage === 'select' && (
             <>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
                   Select Configuration Type
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   {configTypes.map((type) => {
                     const Icon = type.icon;
                     const isSelected = selectedType === type.id;
@@ -368,27 +375,29 @@ export default function NewConfigurationPage({ params }: PageProps) {
                         )}
                         onClick={() => setSelectedType(type.id)}
                       >
-                        <CardContent className="p-6">
-                          <div className="flex items-start gap-4">
+                        <CardContent className="p-4 sm:p-6">
+                          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                             <div
                               className={cn(
-                                'p-3 rounded-xl flex-shrink-0',
+                                'p-2 sm:p-3 rounded-xl flex-shrink-0',
                                 isSelected ? 'bg-ocean-100' : 'bg-gray-100'
                               )}
                             >
                               <Icon
                                 className={cn(
-                                  'h-6 w-6',
+                                  'h-5 w-5 sm:h-6 sm:w-6',
                                   isSelected ? 'text-ocean-600' : 'text-gray-600'
                                 )}
                               />
                             </div>
 
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-semibold text-gray-900">{type.name}</h4>
+                              <div className="flex flex-wrap items-center gap-2 mb-2">
+                                <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
+                                  {type.name}
+                                </h4>
                                 {type.recommended && (
-                                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                                  <span className="text-[0.6rem] sm:text-xs bg-green-100 text-green-700 px-1.5 sm:px-2 py-0.5 rounded-full font-medium">
                                     Recommended
                                   </span>
                                 )}
@@ -396,13 +405,15 @@ export default function NewConfigurationPage({ params }: PageProps) {
                                   <CheckCircle2 className="h-4 w-4 text-ocean-600 ml-auto" />
                                 )}
                               </div>
-                              <p className="text-sm text-gray-600 mb-3">{type.description}</p>
+                              <p className="text-xs sm:text-sm text-gray-600 mb-3">
+                                {type.description}
+                              </p>
 
-                              <div className="flex flex-wrap gap-1.5">
+                              <div className="flex flex-wrap gap-1">
                                 {type.files.map((file, idx) => (
                                   <span
                                     key={idx}
-                                    className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded font-mono"
+                                    className="text-[0.6rem] sm:text-xs bg-gray-100 text-gray-700 px-1.5 sm:px-2 py-0.5 rounded font-mono"
                                   >
                                     {file}
                                   </span>
@@ -419,26 +430,26 @@ export default function NewConfigurationPage({ params }: PageProps) {
 
               {/* Preview & Generate */}
               <Card>
-                <CardHeader>
-                  <CardTitle>Configuration Preview</CardTitle>
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="text-base sm:text-lg">Configuration Preview</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-ocean-50/30 border border-ocean-200">
+                  <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg bg-ocean-50/30 border border-ocean-200">
                     <FileCode className="h-5 w-5 text-ocean-600 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900 mb-1">
                         {configTypes.find((t) => t.id === selectedType)?.name} Configuration
                       </p>
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-3">
                         {configTypes.find((t) => t.id === selectedType)?.description}
                       </p>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5">
                         {configTypes
                           .find((t) => t.id === selectedType)
                           ?.files.map((file, idx) => (
                             <span
                               key={idx}
-                              className="text-xs bg-white border border-ocean-200 text-gray-700 px-2.5 py-1 rounded font-mono"
+                              className="text-[0.6rem] sm:text-xs bg-white border border-ocean-200 text-gray-700 px-2 py-0.5 rounded font-mono"
                             >
                               {file}
                             </span>
@@ -447,20 +458,25 @@ export default function NewConfigurationPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t">
-                    <p className="text-sm text-gray-600">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t">
+                    <p className="text-xs sm:text-sm text-gray-600">
                       Configuration will be generated based on discovery v2
                     </p>
-                    <div className="flex items-center gap-3">
-                      <Link href={`/project/${resolvedParams.id}/configs`}>
-                        <Button variant="outline">Cancel</Button>
+                    <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                      <Link
+                        href={`/project/${resolvedParams.id}/configs`}
+                        className="w-full sm:w-auto"
+                      >
+                        <Button variant="outline" className="w-full sm:w-auto px-3 sm:px-4">
+                          Cancel
+                        </Button>
                       </Link>
                       <Button
                         onClick={handleGenerate}
                         disabled={
                           isGenerating || !aiProviderStatus?.hasProvider || isLoadingProviderStatus
                         }
-                        className="bg-gradient-to-r from-ocean-600 to-ocean-500"
+                        className="bg-gradient-to-r from-ocean-600 to-ocean-500 w-full sm:w-auto px-3 sm:px-4"
                         title={
                           !aiProviderStatus?.hasProvider
                             ? 'Configure an AI provider first'
@@ -470,12 +486,12 @@ export default function NewConfigurationPage({ params }: PageProps) {
                         {isGenerating ? (
                           <>
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Generating...
+                            <span className="text-xs sm:text-sm">Generating...</span>
                           </>
                         ) : (
                           <>
                             <FileCode className="h-4 w-4 mr-2" />
-                            Generate Configuration
+                            <span className="text-xs sm:text-sm">Generate Configuration</span>
                           </>
                         )}
                       </Button>

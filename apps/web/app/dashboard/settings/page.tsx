@@ -24,9 +24,9 @@ function SettingsContent() {
 
   const headerActions = (
     <Link href="/dashboard">
-      <Button variant="ghost" size="sm">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Dashboard
+      <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+        <ArrowLeft className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Back</span>
       </Button>
     </Link>
   );
@@ -40,13 +40,13 @@ function SettingsContent() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-6xl mx-auto px-6 space-y-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
           {/* Quick Settings Overview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* AI Providers */}
             <Link href="/dashboard/settings/ai-providers">
               <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-purple-100 rounded-lg">
                       <Zap className="h-6 w-6 text-purple-600" />
@@ -58,7 +58,10 @@ function SettingsContent() {
                     Configure AI models for code analysis and generation
                   </p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-green-100 text-green-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-100 text-green-700 text-xs sm:text-sm"
+                    >
                       2 Active
                     </Badge>
                   </div>
@@ -69,7 +72,7 @@ function SettingsContent() {
             {/* Deployment Targets */}
             <Link href="/dashboard/deployments">
               <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-ocean-100 rounded-lg">
                       <Server className="h-6 w-6 text-ocean-600" />
@@ -81,7 +84,10 @@ function SettingsContent() {
                     Manage platform credentials (Vercel, Railway, AWS)
                   </p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-gray-200 text-gray-700 text-xs sm:text-sm"
+                    >
                       5 Platforms
                     </Badge>
                   </div>
@@ -92,7 +98,7 @@ function SettingsContent() {
             {/* Integrations */}
             <Link href="/dashboard/integrations">
               <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-blue-100 rounded-lg">
                       <Key className="h-6 w-6 text-blue-600" />
@@ -104,7 +110,10 @@ function SettingsContent() {
                     Third-party service credentials and API keys
                   </p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-gray-200 text-gray-700 text-xs sm:text-sm"
+                    >
                       5 Connected
                     </Badge>
                   </div>
@@ -115,7 +124,7 @@ function SettingsContent() {
             {/* Database */}
             <Link href="/dashboard/settings/database">
               <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-green-100 rounded-lg">
                       <Database className="h-6 w-6 text-green-600" />
@@ -125,7 +134,10 @@ function SettingsContent() {
                   <h3 className="font-semibold text-gray-900 mb-2">Database</h3>
                   <p className="text-sm text-gray-600 mb-3">SQLite • 2.4 MB • 12 projects</p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-green-100 text-green-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-100 text-green-700 text-xs sm:text-sm"
+                    >
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                       Connected
                     </Badge>
@@ -136,8 +148,8 @@ function SettingsContent() {
 
             {/* Security & Encryption */}
             <Link href="/dashboard/settings/security">
-              <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer border-2 border-ocean-200 bg-gradient-to-br from-ocean-50/50 to-blue-50/50 md:col-span-2 h-full">
-                <CardContent className="p-6">
+              <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer border-2 border-ocean-200 bg-gradient-to-br from-ocean-50/50 to-blue-50/50 sm:col-span-2 h-full">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-ocean-100 rounded-lg">
                       <Shield className="h-6 w-6 text-ocean-600" />
@@ -148,12 +160,18 @@ function SettingsContent() {
                   <p className="text-sm text-gray-600 mb-4">
                     Master encryption key protects all credentials with AES-256-GCM
                   </p>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-green-100 text-green-700">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-100 text-green-700 text-xs sm:text-sm"
+                    >
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                       {hasCustomKey ? 'Custom Key' : 'System Generated'}
                     </Badge>
-                    <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-gray-200 text-gray-700 text-xs sm:text-sm"
+                    >
                       Created 5 days ago
                     </Badge>
                   </div>
@@ -164,7 +182,7 @@ function SettingsContent() {
             {/* Backup & Restore */}
             <Link href="/dashboard/settings/backup">
               <Card className="hover:shadow-elegant transition-all hover:border-ocean-300 cursor-pointer border-gray-200 bg-gray-50 h-full">
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 bg-gray-200 rounded-lg">
                       <RefreshCw className="h-6 w-6 text-gray-600" />
@@ -175,11 +193,17 @@ function SettingsContent() {
                   <p className="text-sm text-gray-600 mb-3">
                     Manage database backups, restore points, and automatic backup schedules
                   </p>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-green-100 text-green-700">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-100 text-green-700 text-xs sm:text-sm"
+                    >
                       Auto-backup enabled
                     </Badge>
-                    <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                    <Badge
+                      variant="secondary"
+                      className="bg-gray-200 text-gray-700 text-xs sm:text-sm"
+                    >
                       Last backup: 2 hours ago
                     </Badge>
                   </div>

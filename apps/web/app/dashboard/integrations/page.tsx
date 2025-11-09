@@ -64,7 +64,7 @@ export default function IntegrationsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNewIntegrationDialog, setShowNewIntegrationDialog] = useState(false);
   const [credentialType, setCredentialType] = useState<CredentialType>('api_key');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   // Mock integrations data
   const integrations = [
@@ -187,15 +187,15 @@ export default function IntegrationsPage() {
   };
 
   const headerActions = (
-    <div className="flex items-center space-x-3">
-      <Button onClick={() => setShowNewIntegrationDialog(true)}>
-        <Plus className="h-4 w-4 mr-2" />
-        Add Integration
+    <div className="flex items-center space-x-2 sm:space-x-3">
+      <Button onClick={() => setShowNewIntegrationDialog(true)} size="sm" className="px-2 sm:px-4">
+        <Plus className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Add Integration</span>
       </Button>
       <Link href="/dashboard">
-        <Button variant="ghost" size="sm">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Dashboard
+        <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+          <ArrowLeft className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Back</span>
         </Button>
       </Link>
     </div>
@@ -210,23 +210,23 @@ export default function IntegrationsPage() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-7xl mx-auto px-6 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
           {/* Security Info Card */}
           <Card className="border-ocean-200 bg-gradient-to-r from-ocean-50/50 to-blue-50/50">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="p-3 bg-ocean-100 rounded-lg">
                   <ShieldCheck className="h-6 w-6 text-ocean-600" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900 mb-2">Enterprise-Grade Security</h3>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <span>AES-256-GCM Encryption</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <span>Auto-injection by AI</span>
                     </div>
                   </div>
@@ -236,23 +236,32 @@ export default function IntegrationsPage() {
           </Card>
 
           {/* Search & Filter */}
-          <div className="flex items-center justify-between gap-4">
-            <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
-              <TabsList>
-                {categories.map((cat) => (
-                  <TabsTrigger key={cat.id} value={cat.id} className="relative">
-                    {cat.label}
-                    {cat.count > 0 && (
-                      <Badge variant="secondary" className="ml-2 bg-gray-200 text-gray-700">
-                        {cat.count}
-                      </Badge>
-                    )}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="w-full overflow-x-auto">
+              <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-fit">
+                <TabsList className="grid grid-cols-2 sm:flex w-full sm:w-full h-full">
+                  {categories.map((cat) => (
+                    <TabsTrigger
+                      key={cat.id}
+                      value={cat.id}
+                      className="relative text-xs sm:text-sm"
+                    >
+                      <span className="truncate">{cat.label}</span>
+                      {cat.count > 0 && (
+                        <Badge
+                          variant="secondary"
+                          className="ml-1 bg-gray-200 text-gray-700 text-xs"
+                        >
+                          {cat.count}
+                        </Badge>
+                      )}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </div>
 
-            <div className="relative w-80">
+            <div className="relative w-full sm:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 placeholder="Search integrations..."
@@ -266,53 +275,57 @@ export default function IntegrationsPage() {
           {/* Integrations Grid */}
           {filteredIntegrations.length === 0 ? (
             <Card className="border-dashed border-2">
-              <CardContent className="p-16 text-center">
+              <CardContent className="p-8 sm:p-16 text-center">
                 <IconWrapper variant="default" size="xl" className="mx-auto mb-4">
                   <Key className="h-12 w-12" />
                 </IconWrapper>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                   {searchQuery ? 'No integrations found' : 'No integrations yet'}
                 </h3>
-                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto">
                   {searchQuery
                     ? 'Try adjusting your search or add a new integration'
                     : 'Add your first integration to enable automatic credential management. AI will use these when analyzing and deploying projects.'}
                 </p>
-                <Button size="lg" onClick={() => setShowNewIntegrationDialog(true)}>
+                <Button
+                  size="lg"
+                  onClick={() => setShowNewIntegrationDialog(true)}
+                  className="px-4 sm:px-6"
+                >
                   <Plus className="h-5 w-5 mr-2" />
-                  Add First Integration
+                  Add Integration
                 </Button>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {filteredIntegrations.map((integration) => (
                 <Card
                   key={integration.id}
                   className="hover:shadow-elegant transition-all hover:border-ocean-300"
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-4 sm:p-6">
                     <div className="space-y-4">
                       {/* Header */}
                       <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-3 flex-1">
-                          <IconWrapper variant="default" size="md" className="flex-shrink-0">
+                        <div className="flex items-start gap-3 flex-1 min-w-0">
+                          <IconWrapper variant="default" size="md" className="flex-shrink-0 mt-0.5">
                             {getIntegrationIcon(integration.type)}
                           </IconWrapper>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-semibold text-gray-900 truncate">
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
+                              <h4 className="font-semibold text-gray-900 truncate text-base sm:text-lg">
                                 {integration.name}
                               </h4>
                               {integration.status === 'connected' ? (
                                 <Badge
                                   variant="secondary"
-                                  className="bg-green-100 text-green-700 flex-shrink-0"
+                                  className="bg-green-100 text-green-700 flex-shrink-0 text-xs"
                                 >
                                   Connected
                                 </Badge>
                               ) : (
-                                <Badge variant="destructive" className="flex-shrink-0">
+                                <Badge variant="destructive" className="flex-shrink-0 text-xs">
                                   Error
                                 </Badge>
                               )}
@@ -323,7 +336,7 @@ export default function IntegrationsPage() {
 
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="flex-shrink-0">
+                            <Button variant="ghost" size="sm" className="flex-shrink-0 h-8 w-8 p-0">
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
@@ -353,7 +366,7 @@ export default function IntegrationsPage() {
                       )}
 
                       {/* Credential Type & Security */}
-                      <div className="flex items-center gap-4 text-xs">
+                      <div className="flex flex-wrap items-center gap-3 text-xs">
                         <div className="flex items-center gap-1.5 text-gray-600">
                           {getCredentialTypeIcon(integration.credentialType)}
                           <span className="capitalize">
@@ -362,13 +375,13 @@ export default function IntegrationsPage() {
                         </div>
                         <span className="text-gray-400">•</span>
                         <div className="flex items-center gap-1.5 text-gray-600">
-                          <Lock className="h-3.5 w-3.5" />
+                          <Lock className="h-3.5 w-3.5 flex-shrink-0" />
                           <span>{integration.encryption}</span>
                         </div>
                       </div>
 
                       {/* Stats */}
-                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+                      <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100">
                         <div>
                           <p className="text-xs text-gray-500 mb-1">Used</p>
                           <p className="text-sm font-semibold text-gray-900">
@@ -377,13 +390,13 @@ export default function IntegrationsPage() {
                         </div>
                         <div>
                           <p className="text-xs text-gray-500 mb-1">Created</p>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-xs sm:text-sm font-semibold text-gray-900">
                             {integration.createdAt}
                           </p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-500 mb-1">Last Used</p>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-xs sm:text-sm font-semibold text-gray-900">
                             {integration.lastUsed}
                           </p>
                         </div>
@@ -399,9 +412,9 @@ export default function IntegrationsPage() {
 
       {/* Add Integration Dialog */}
       <Dialog open={showNewIntegrationDialog} onOpenChange={setShowNewIntegrationDialog}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl">Add New Integration</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">Add New Integration</DialogTitle>
             <DialogDescription>
               Add credentials for third-party services. All data is encrypted with AES-256-GCM.
             </DialogDescription>
@@ -492,7 +505,7 @@ export default function IntegrationsPage() {
               {credentialType === 'json_service_account' && (
                 <>
                   <Label htmlFor="json-file">Service Account JSON</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-ocean-400 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center hover:border-ocean-400 transition-colors cursor-pointer">
                     <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                     <p className="text-sm text-gray-600 mb-1">
                       <span className="font-medium text-ocean-600">Click to upload</span> or paste
@@ -515,7 +528,7 @@ export default function IntegrationsPage() {
                 <>
                   <Label>Key-Value Pairs</Label>
                   <div className="space-y-3 p-4 border border-gray-200 rounded-lg">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <FloatingInput label="Key Name" leftIcon={<Key className="h-4 w-4" />} />
                       <FloatingInput
                         label="Key Value"
@@ -523,7 +536,7 @@ export default function IntegrationsPage() {
                         leftIcon={<Lock className="h-4 w-4" />}
                       />
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <FloatingInput label="Key Name" leftIcon={<Key className="h-4 w-4" />} />
                       <FloatingInput
                         label="Key Value"
@@ -546,7 +559,7 @@ export default function IntegrationsPage() {
                     type="password"
                     leftIcon={<ShieldCheck className="h-4 w-4" />}
                   />
-                  <div className="mt-3 grid grid-cols-2 gap-3">
+                  <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <FloatingInput
                       label="Refresh Token (Optional)"
                       type="password"
@@ -564,7 +577,7 @@ export default function IntegrationsPage() {
             {/* Encryption Info */}
             <div className="p-4 bg-ocean-50 border border-ocean-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <Lock className="h-5 w-5 text-ocean-600 mt-0.5" />
+                <Lock className="h-5 w-5 text-ocean-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-gray-900 mb-1">Automatic Encryption</h4>
                   <p className="text-sm text-gray-700">
@@ -576,11 +589,15 @@ export default function IntegrationsPage() {
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowNewIntegrationDialog(false)}>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setShowNewIntegrationDialog(false)}
+              className="w-full sm:w-auto"
+            >
               Cancel
             </Button>
-            <Button onClick={() => setShowNewIntegrationDialog(false)}>
+            <Button onClick={() => setShowNewIntegrationDialog(false)} className="w-full sm:w-auto">
               <ShieldCheck className="h-4 w-4 mr-2" />
               Add Integration
             </Button>

@@ -195,15 +195,15 @@ export default function DeploymentsPage() {
   };
 
   const headerActions = (
-    <div className="flex items-center space-x-3">
-      <Button onClick={() => setShowNewTargetDialog(true)}>
-        <Plus className="h-4 w-4 mr-2" />
-        Add Deployment Target
+    <div className="flex items-center space-x-2 sm:space-x-3">
+      <Button onClick={() => setShowNewTargetDialog(true)} size="sm" className="px-2 sm:px-4">
+        <Plus className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Add Target</span>
       </Button>
       <Link href="/dashboard">
-        <Button variant="ghost" size="sm">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Dashboard
+        <Button variant="ghost" size="sm" className="px-2 sm:px-3">
+          <ArrowLeft className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Back</span>
         </Button>
       </Link>
     </div>
@@ -218,27 +218,27 @@ export default function DeploymentsPage() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-7xl mx-auto px-6 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
           {/* Security Info Card */}
           <Card className="border-ocean-200 bg-gradient-to-r from-ocean-50/50 to-blue-50/50">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="p-3 bg-ocean-100 rounded-lg">
                   <ShieldCheck className="h-6 w-6 text-ocean-600" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900 mb-2">Secure Credential Management</h3>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-gray-700">
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <span>AES-256-GCM Encryption</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <span>Connection Testing</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <span>Auto-deploy Integration</span>
                     </div>
                   </div>
@@ -248,17 +248,26 @@ export default function DeploymentsPage() {
           </Card>
 
           {/* Search & Filter */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-centerjustify-between gap-4">
             <Tabs
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as PlatformCategory)}
+              className="w-fit overflow-x-auto"
             >
-              <TabsList>
+              {/* <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-fit"> */}
+              <TabsList className="grid grid-cols-2 sm:flex w-fit h-full">
                 {categories.map((cat) => (
-                  <TabsTrigger key={cat.id} value={cat.id} className="relative">
-                    {cat.label}
+                  <TabsTrigger
+                    key={cat.id}
+                    value={cat.id}
+                    className="relative text-xs sm:text-sm whitespace-nowrap"
+                  >
+                    <span className="truncate">{cat.label}</span>
                     {cat.count > 0 && (
-                      <Badge variant="secondary" className="ml-2 bg-gray-200 text-gray-700">
+                      <Badge
+                        variant="secondary"
+                        className="ml-1 sm:ml-2 bg-gray-200 text-gray-700 text-xs"
+                      >
                         {cat.count}
                       </Badge>
                     )}
@@ -267,7 +276,7 @@ export default function DeploymentsPage() {
               </TabsList>
             </Tabs>
 
-            <div className="relative w-80">
+            <div className="relative w-full sm:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 placeholder="Search deployment targets..."
@@ -281,48 +290,52 @@ export default function DeploymentsPage() {
           {/* Deployment Targets Grid */}
           {filteredTargets.length === 0 ? (
             <Card className="border-dashed border-2">
-              <CardContent className="p-16 text-center">
+              <CardContent className="p-8 sm:p-16 text-center">
                 <IconWrapper variant="default" size="xl" className="mx-auto mb-4">
                   <Server className="h-12 w-12" />
                 </IconWrapper>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                   {searchQuery ? 'No deployment targets found' : 'No deployment targets yet'}
                 </h3>
-                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto">
                   {searchQuery
                     ? 'Try adjusting your search or add a new deployment target'
                     : 'Add your first deployment target to enable automatic deployments. Connect Vercel, Railway, AWS, and more.'}
                 </p>
-                <Button size="lg" onClick={() => setShowNewTargetDialog(true)}>
+                <Button
+                  size="lg"
+                  onClick={() => setShowNewTargetDialog(true)}
+                  className="px-4 sm:px-6"
+                >
                   <Plus className="h-5 w-5 mr-2" />
-                  Add First Deployment Target
+                  Add First Target
                 </Button>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {filteredTargets.map((target) => (
                 <Card
                   key={target.id}
                   className="hover:shadow-elegant transition-all hover:border-ocean-300"
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-4 sm:p-6">
                     <div className="space-y-4">
                       {/* Header */}
                       <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-3 flex-1">
-                          <IconWrapper variant="default" size="md" className="flex-shrink-0">
+                        <div className="flex items-start gap-3 flex-1 min-w-0">
+                          <IconWrapper variant="default" size="md" className="flex-shrink-0 mt-0.5">
                             {getPlatformIcon(target.platform)}
                           </IconWrapper>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
                               <h4 className="font-semibold text-gray-900 truncate">
                                 {target.name}
                               </h4>
                               {target.isDefault && (
                                 <Badge
                                   variant="secondary"
-                                  className="bg-ocean-100 text-ocean-700 flex-shrink-0"
+                                  className="bg-ocean-100 text-ocean-700 flex-shrink-0 text-xs"
                                 >
                                   <Star className="h-3 w-3 mr-1 fill-current" />
                                   Default
@@ -331,17 +344,17 @@ export default function DeploymentsPage() {
                               {target.status === 'connected' ? (
                                 <Badge
                                   variant="secondary"
-                                  className="bg-green-100 text-green-700 flex-shrink-0"
+                                  className="bg-green-100 text-green-700 flex-shrink-0 text-xs"
                                 >
                                   Connected
                                 </Badge>
                               ) : (
-                                <Badge variant="destructive" className="flex-shrink-0">
+                                <Badge variant="destructive" className="flex-shrink-0 text-xs">
                                   Error
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-gray-600 truncate">
                               {getPlatformName(target.platform)}
                             </p>
                           </div>
@@ -388,10 +401,10 @@ export default function DeploymentsPage() {
                       {/* Settings */}
                       {target.settings && Object.keys(target.settings).length > 0 && (
                         <div className="p-3 bg-gray-50 rounded-lg">
-                          <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                             {Object.entries(target.settings).map(([key, value]) => (
-                              <div key={key}>
-                                <span className="text-gray-500">{key}:</span>{' '}
+                              <div key={key} className="flex flex-wrap">
+                                <span className="text-gray-500 mr-1">{key}:</span>{' '}
                                 <span className="font-medium text-gray-900">{value as string}</span>
                               </div>
                             ))}
@@ -400,25 +413,33 @@ export default function DeploymentsPage() {
                       )}
 
                       {/* Stats */}
-                      <div className="flex items-center gap-6 pt-3 border-t border-gray-200 text-sm">
-                        <div>
-                          <p className="text-xs text-gray-500 mb-1">Encryption</p>
-                          <div className="flex items-center gap-1">
-                            <Lock className="h-3 w-3 text-ocean-600" />
-                            <span className="font-medium text-gray-900">{target.encryption}</span>
+                      <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-gray-200 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Lock className="h-3 w-3 text-ocean-600 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs text-gray-500 mb-0.5">Encryption</p>
+                            <span className="font-medium text-gray-900 text-xs sm:text-sm">
+                              {target.encryption}
+                            </span>
                           </div>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Used</p>
-                          <p className="font-semibold text-gray-900">{target.usageCount} times</p>
+                          <p className="text-xs text-gray-500 mb-0.5">Used</p>
+                          <p className="font-semibold text-gray-900 text-xs sm:text-sm">
+                            {target.usageCount} times
+                          </p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Created</p>
-                          <p className="text-sm font-semibold text-gray-900">{target.createdAt}</p>
+                          <p className="text-xs text-gray-500 mb-0.5">Created</p>
+                          <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                            {target.createdAt}
+                          </p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Last Used</p>
-                          <p className="text-sm font-semibold text-gray-900">{target.lastUsed}</p>
+                          <p className="text-xs text-gray-500 mb-0.5">Last Used</p>
+                          <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                            {target.lastUsed}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -434,7 +455,7 @@ export default function DeploymentsPage() {
       <Dialog open={showNewTargetDialog} onOpenChange={setShowNewTargetDialog}>
         <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl">Add Deployment Target</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">Add Deployment Target</DialogTitle>
             <DialogDescription>
               Configure a new deployment platform. All credentials are encrypted with AES-256-GCM.
             </DialogDescription>
@@ -579,7 +600,7 @@ export default function DeploymentsPage() {
             {/* Encryption Info */}
             <div className="p-4 bg-ocean-50 border border-ocean-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <Lock className="h-5 w-5 text-ocean-600 mt-0.5" />
+                <Lock className="h-5 w-5 text-ocean-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-gray-900 mb-1">Automatic Encryption</h4>
                   <p className="text-sm text-gray-700">
@@ -591,7 +612,7 @@ export default function DeploymentsPage() {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
             <Button
               variant="outline"
               onClick={() => {
@@ -599,6 +620,7 @@ export default function DeploymentsPage() {
                 setSelectedPlatform('');
                 setShowConfigFields(false);
               }}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
@@ -609,9 +631,10 @@ export default function DeploymentsPage() {
                 setSelectedPlatform('');
                 setShowConfigFields(false);
               }}
+              className="w-full sm:w-auto"
             >
               <ShieldCheck className="h-4 w-4 mr-2" />
-              Add Deployment Target
+              Add Target
             </Button>
           </DialogFooter>
         </DialogContent>

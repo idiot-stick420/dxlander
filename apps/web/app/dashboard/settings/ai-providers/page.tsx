@@ -10,9 +10,9 @@ import { AIProvidersTab } from '@/components/settings/ai-providers-tab';
 function AIProvidersContent() {
   const headerActions = (
     <Link href="/dashboard/settings">
-      <Button variant="ghost" size="sm">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Settings
+      <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+        <ArrowLeft className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Back</span>
       </Button>
     </Link>
   );
@@ -26,7 +26,7 @@ function AIProvidersContent() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <AIProvidersTab />
         </div>
       </Section>

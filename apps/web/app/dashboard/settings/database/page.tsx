@@ -65,16 +65,16 @@ function DatabaseContent() {
   };
 
   const headerActions = (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row items-center gap-2">
       <Link href="/dashboard/settings">
-        <Button variant="ghost" size="sm">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Settings
+        <Button variant="ghost" size="sm" className="px-2 sm:px-4">
+          <ArrowLeft className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Back</span>
         </Button>
       </Link>
-      <Button size="sm">
-        <Save className="h-4 w-4 mr-2" />
-        Save Changes
+      <Button size="sm" className="px-2 sm:px-4">
+        <Save className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">Save</span>
       </Button>
     </div>
   );
@@ -88,12 +88,12 @@ function DatabaseContent() {
       />
 
       <Section spacing="lg" container={false}>
-        <div className="max-w-5xl mx-auto px-6 space-y-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-6">
           {/* Current Database Status */}
           <Card className="border-green-200 bg-gradient-to-r from-green-50/50 to-emerald-50/50">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-start gap-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <div className="p-3 bg-green-100 rounded-lg">
                     <Database className="h-6 w-6 text-green-600" />
                   </div>
@@ -101,25 +101,27 @@ function DatabaseContent() {
                     <h3 className="font-semibold text-gray-900 mb-1">Database Connected</h3>
                     <p className="text-sm text-gray-700 mb-3">
                       SQLite •{' '}
-                      <code className="bg-white/50 px-1 rounded">~/.dxlander/data/dxlander.db</code>
+                      <code className="bg-white/50 px-1 rounded text-xs">
+                        ~/.dxlander/data/dxlander.db
+                      </code>
                     </p>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-green-100 text-green-700">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         Healthy
                       </Badge>
-                      <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                      <Badge variant="secondary" className="bg-gray-200 text-gray-700 text-xs">
                         {isLoading ? 'Loading...' : fileSizeLabel}
                       </Badge>
-                      <Badge variant="secondary" className="bg-gray-200 text-gray-700">
+                      <Badge variant="secondary" className="bg-gray-200 text-gray-700 text-xs">
                         {isLoading ? 'Loading...' : `${tableCount('projects')} Projects`}
                       </Badge>
                     </div>
                   </div>
                 </div>
-                <Button variant="outline">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
                   <RefreshCw className="h-4 w-4 mr-2" />
-                  Test Connection
+                  <span className="hidden sm:inline">Test</span>
                 </Button>
               </div>
             </CardContent>
@@ -128,13 +130,13 @@ function DatabaseContent() {
           {isError && (
             <Card className="border-red-200">
               <CardContent>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
                     <p className="text-sm text-red-700">
                       Failed to load database statistics: {String(error?.message)}
                     </p>
                   </div>
-                  <Button onClick={() => refetch()}>
+                  <Button onClick={() => refetch()} size="sm">
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Retry
                   </Button>
@@ -144,16 +146,16 @@ function DatabaseContent() {
           )}
 
           {/* Database Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-100 rounded-lg">
                     <HardDrive className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Total Size</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">
                       {isLoading ? '—' : fileSizeLabel}
                     </p>
                   </div>
@@ -162,14 +164,14 @@ function DatabaseContent() {
             </Card>
 
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-purple-100 rounded-lg">
                     <Database className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Tables</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">
                       {isLoading ? '—' : tablesCountLabel}
                     </p>
                   </div>
@@ -178,14 +180,14 @@ function DatabaseContent() {
             </Card>
 
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-100 rounded-lg">
                     <Activity className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Records</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">
                       {isLoading ? '—' : recordsLabel}
                     </p>
                   </div>
@@ -194,7 +196,7 @@ function DatabaseContent() {
             </Card>
 
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-100 rounded-lg">
                     <Clock className="h-5 w-5 text-amber-600" />
@@ -202,7 +204,9 @@ function DatabaseContent() {
                   <div>
                     <p className="text-xs text-gray-500 mb-1">Last Query</p>
                     <p className="text-sm font-semibold text-gray-900">
-                      <Badge variant="secondary">Coming soon</Badge>
+                      <Badge variant="secondary" className="text-xs">
+                        Coming soon
+                      </Badge>
                     </p>
                   </div>
                 </div>
@@ -213,15 +217,17 @@ function DatabaseContent() {
           {/* Database Configuration */}
           <Card>
             <CardHeader>
-              <CardTitle>Database Type</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Database Type</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
                 Choose your database engine and configure connection settings
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="database-type">Database Engine</Label>
+                  <Label htmlFor="database-type" className="text-sm">
+                    Database Engine
+                  </Label>
                   <Select value={databaseType} onValueChange={setDatabaseType}>
                     <SelectTrigger id="database-type">
                       <SelectValue />
@@ -230,7 +236,7 @@ function DatabaseContent() {
                       <SelectItem value="sqlite">
                         <div className="flex items-center justify-between w-full">
                           <span>SQLite (Default)</span>
-                          <Badge variant="secondary" className="ml-2">
+                          <Badge variant="secondary" className="ml-2 text-xs">
                             Recommended
                           </Badge>
                         </div>
@@ -244,7 +250,9 @@ function DatabaseContent() {
                 {databaseType === 'sqlite' && (
                   <>
                     <div className="space-y-2">
-                      <Label htmlFor="db-path">Database Path</Label>
+                      <Label htmlFor="db-path" className="text-sm">
+                        Database Path
+                      </Label>
                       <Input
                         id="db-path"
                         value="~/.dxlander/data/dxlander.db"
@@ -258,10 +266,10 @@ function DatabaseContent() {
 
                     <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                       <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5" />
+                        <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                         <div>
                           <h4 className="font-medium text-gray-900 mb-1">SQLite Benefits</h4>
-                          <ul className="text-sm text-gray-700 space-y-1">
+                          <ul className="text-xs sm:text-sm text-gray-700 space-y-1">
                             <li>• Zero configuration required</li>
                             <li>• Fast and lightweight</li>
                             <li>• Perfect for self-hosted setups</li>
@@ -283,7 +291,7 @@ function DatabaseContent() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <FloatingInput
                           label="Connection Pool Size"
@@ -313,7 +321,7 @@ function DatabaseContent() {
                       <FloatingInput label="Host" leftIcon={<Database className="h-4 w-4" />} />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <FloatingInput label="Port" type="number" defaultValue="3306" />
                       </div>
@@ -322,7 +330,7 @@ function DatabaseContent() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <FloatingInput label="Username" />
                       </div>
@@ -344,8 +352,10 @@ function DatabaseContent() {
           {/* Storage Information */}
           <Card>
             <CardHeader>
-              <CardTitle>Storage Breakdown</CardTitle>
-              <CardDescription>Database space usage by entity type</CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Storage Breakdown</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Database space usage by entity type
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -364,11 +374,11 @@ function DatabaseContent() {
 
                   return (
                     <div key={idx} className="space-y-2">
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-3">
                           <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
                           <span className="text-sm font-medium text-gray-900">{item.label}</span>
-                          <Badge variant="secondary" className="bg-gray-100 text-gray-600">
+                          <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs">
                             {isLoading ? '—' : `${count ?? 0} records`}
                           </Badge>
                         </div>
@@ -395,17 +405,19 @@ function DatabaseContent() {
           {/* Maintenance */}
           <Card>
             <CardHeader>
-              <CardTitle>Database Maintenance</CardTitle>
-              <CardDescription>Optimize performance and manage database health</CardDescription>
+              <CardTitle className="text-lg sm:text-xl">Database Maintenance</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Optimize performance and manage database health
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <h4 className="font-medium text-gray-900 mb-2">Vacuum Database</h4>
                   <p className="text-sm text-gray-600 mb-3">
                     Reclaim unused space and optimize performance
                   </p>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" size="sm">
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Run Vacuum
                   </Button>
@@ -416,7 +428,7 @@ function DatabaseContent() {
                   <p className="text-sm text-gray-600 mb-3">
                     Update statistics for query optimization
                   </p>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" size="sm">
                     <Activity className="h-4 w-4 mr-2" />
                     Analyze Now
                   </Button>
